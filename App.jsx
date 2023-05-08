@@ -15,6 +15,7 @@ import Recommend from './src/views/recommend/index'
 import Mine from './src/views/mine/index'
 import Weather from './src/views/weather/index'
 import Map from './src/views/map/index'
+import Square from './src/views/square';
 import support_html from './src/utils/support_html';
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   // const path = require('./a.html')
+
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -32,7 +34,7 @@ export default function App() {
                 return (
                   <Ionicons name="person" size={size} color={color} />
                 );
-              } else if (route.name === 'recommend') {
+              } else if (route.name === 'square') {
                 return (
                   <MaterialIcons name="recommend" size={size} color={color} />
                 );
@@ -55,9 +57,9 @@ export default function App() {
           })}
         >
           <Tab.Screen
-            name='recommend'
-            component={Recommend}
-            options={{ title: '推荐' }}
+            name='square'
+            component={Square}
+            options={{ title: '广场' }}
           />
           <Tab.Screen
             name='weather'
