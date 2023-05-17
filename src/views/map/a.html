@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Baidu Map </title>
+    <style type="text/css">
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        }
+
+        #container {
+            height: 100%;
+            position: relative,
+        }
+
+        .tools {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .anchorBL,
+        .BMap_cpyCtrl {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=jQLBWUcrLFFRikigWKEScd13AcFQoEsS"></script>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/library/TrackAnimation/src/TrackAnimation_min.js"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+    <div class="tools">
+        <button id="start">开始播放</button>
+        <button id="cancel">取消播放</button>
+    </div>
+
+    <script>
+        // https://api.map.baidu.com/api?v=1.0&type=webgl&ak=jQLBWUcrLFFRikigWKEScd13AcFQoEsS
+        var map = new BMapGL.Map("container");          // 创建地图实例 
+        var point = new BMapGL.Point(116.158358, 40.257705);  // 创建点坐标 
+        map.centerAndZoom(point, 17);
+        map.enableScrollWheelZoom(true);
+        // 添加标记点
+        var points = [
+            [116.158358, 40.257706],
+            [116.159212, 40.257172],
+            [116.157941, 40.255806],
+            [116.158318, 40.259158],
+            [116.156036, 40.257661]
+        ]
+        for (let i = 0; i < points.length; i++) {
+            var pt = new BMapGL.Point(points[i][0], points[i][1])
+            var marker = new BMapGL.Marker(pt)
+            map.addOverlay(marker)
+        }
+        // 轨迹动画
+        var trackPoints = [
+            [116.159252,40.257203],
+            [116.15883214172398, 40.25653313638385],
+            [116.15856524464772, 40.2562680515976],
+            [116.15794248301195, 40.25586663490578],
+            [116.15773489532883, 40.25628319953835],
+            [116.15824892100349, 40.25641952890124],
+            [116.15821926531714, 40.256578579583056],
+            [116.15708247913798, 40.25666189174617],
+            [116.15686500700366, 40.25666189174617],
+            [116.1558246482246, 40.256752777939575],
+            [116.1558147629958, 40.256926975410686],
+            [116.15601246481398, 40.25768435075233],
+            [116.15597292418147, 40.25786611959754],
+            [116.15591361337442, 40.25810847711168],
+            [116.15591361337442, 40.25838870220476],
+            [116.15584441804563, 40.258827971263955],
+            [116.15579026913112, 40.25913845002017],
+            [116.15630429424016, 40.25891881659485],
+            [116.15745096536527, 40.258858228165174],
+            [116.1573422298284, 40.25775247654845],
+            [116.15831096966363, 40.25777519752253],
+            [116.15940821577597, 40.257585854934014],
+            [116.1594971808553, 40.257820639881],
+            [116.15973442323508, 40.25876734509308],
+            [116.15824177362765, 40.25884308091378],
+            [116.15833073927261, 40.2591990384407]
+        ]
+        var pathPoint = []
+        for (let i = 0; i < trackPoints.length; i++) {
+            var pt = new BMapGL.Point(trackPoints[i][0], trackPoints[i][1])
+            pathPoint.push(pt)
+        }
+        var pl = new BMapGL.Polyline(pathPoint)
+        var trackAni = new BMapGLLib.TrackAnimation(map, pl, {
+            overallView: true, // 动画完成后自动调整视野到总览
+            tilt: 30,          // 轨迹播放的角度，默认为55
+            duration: 10000,   // 动画持续时长，默认为10000，单位ms
+            delay: 0        // 动画开始的延迟，默认0，单位ms
+        });
+
+        // 获取按钮
+        var start = document.getElementById('start')
+        var cancel = document.getElementById('cancel')
+        start.onclick = function () {
+            trackAni.start();
+        }
+        cancel.onclick = function () {
+            trackAni.cancel()
+        }
+        // 监听事件
+       
+        // map.addEventListener('click', function (e) {
+        //     // alert('点击的经纬度：' + e.latlng.lng + ', ' + e.latlng.lat);
+        //     pppp.push([e.latlng.lng, e.latlng.lat])
+        //     console.log(pppp)
+        // });
+
+    </script>
+</body>
+
+</html>

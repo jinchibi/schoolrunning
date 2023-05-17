@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getSwiper } from "../services";
+import { getActivityList, getSwiper } from "../services";
 
 export const fetchSwipperDataAction = createAsyncThunk(
     'swiper',
@@ -9,20 +9,37 @@ export const fetchSwipperDataAction = createAsyncThunk(
     }
 )
 
+export const fetchActivityListAction = createAsyncThunk(
+    'activityList',
+    async (args, { dispatch }) => {
+        const res = []
+        for (let i = 1; i <= 7; i++) {
+            let response = await getActivityList(i)
+            res.push(response.data)
+        }
+        dispatch(changeActivityListAction(res))
+    }
+)
+
 const squareSlice = createSlice({
     name: 'square',
     initialState: {
-        swiper: []
+        swiper: [],
+        activityList: []
     },
     reducers: {
         changeSwiperAction(state, { payload }) {
             state.swiper = payload
+        },
+        changeActivityListAction(state, { payload }) {
+            state.activityList = payload
         }
     }
 })
 
 export const {
-    changeSwiperAction
+    changeSwiperAction,
+    changeActivityListAction
 } = squareSlice.actions
 
 export default squareSlice.reducer

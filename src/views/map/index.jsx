@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import support_html from '@src/utils/support_html';
 
 const Map = () => {
   return (
-    <View>
-      <Text>Map</Text>
+    <View style={{flex: 1}}>
+      {
+        support_html(require('./a.html'))
+      }
     </View>
   )
 }

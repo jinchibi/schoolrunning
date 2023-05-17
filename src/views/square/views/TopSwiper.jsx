@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     titleContainer: {
         zIndex: 100,
         position: 'relative',
-        top: -20,
+        top: -19,
         opacity: .6,
         backgroundColor: '#000'
     },
